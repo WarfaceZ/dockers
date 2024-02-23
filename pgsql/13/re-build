@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+docker run -d \
+  --rm \
+	--name postgres13 \
+	-p 5432:5432 \
+	-e POSTGRES_PASSWORD=postgres \
+	-e POSTGRES_USER=postgres \
+	-e PGDATA=/var/lib/postgresql/data/pgdata \
+	-v ./data:/var/lib/postgresql/data \
+	postgres:13
