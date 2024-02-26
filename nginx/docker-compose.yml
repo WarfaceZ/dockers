@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+  traefik:
+    image: traefik:v2.11
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/traefik.yml
+    ports:
+      - '80:80'
+      - '8080:8080'
+    networks:
+      - traefik
   nginx:
     build:
       dockerfile: Dockerfile
@@ -13,13 +23,18 @@ services:
       - php
     labels:
           - "traefik.enable=true"
-          - "traefik.http.routers.web.rule=Host(`web.local`, `edoo.local`)"
+          - "traefik.http.routers.web.rule=Host(`web.local`, `edoo.local`, `portal.edoo.local`, `api.edoo.local`)"
           - "traefik.docker.network=traefik"
     networks:
       - traefik
 
   php:
-    image: php8.1-edookit-fpm
+    build:
+      dockerfile: php/8.1/Dockerfile.fpm
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: php8.1-fpm-global
     volumes:
       - ./../../www:/var/www/html
     networks:
