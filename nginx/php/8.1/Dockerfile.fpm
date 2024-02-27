@@ -11,6 +11,8 @@ ENV GID=${GID}
 
 RUN addgroup --gid ${GID} --system developer
 RUN adduser --gid ${GID} --uid ${UID} --system --disabled-password developer
+RUN usermod -a -G www-data developer
+RUN usermod -a -G developer www-data
 
 RUN apt-get update && apt-get install -y \
         libicu-dev \
