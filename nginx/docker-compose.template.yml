@@ -20,25 +20,28 @@ services:
       - ./conf/sites/:/etc/nginx/sites-available
       - ./conf/conf.d:/etc/nginx/conf.d
     depends_on:
-      - php
+      - php-fpm
     labels:
           - "traefik.enable=true"
-          - "traefik.http.routers.web.rule=Host(`web.local`, `edoo.local`, `portal.edoo.local`, `api.edoo.local`)"
-          - "traefik.docker.network=traefik"
+          - "traefik.http.routers.nginx.rule=HostRegexp(`{domain:[a-z]+}.local`, `{subdomain:[a-z]+}.{domain:[a-z]+}.local`)"
     networks:
       - traefik
 
-  php:
+  php-fpm:
     build:
       dockerfile: php/8.1/Dockerfile.fpm
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
-    container_name: php8.1-fpm-global
+        - USERNAME=${USERNAME:-developer}
     volumes:
       - ./../../www:/var/www/html
+      - ./php/8.1/conf/00-debug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
       - traefik
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    env_file: .env
 
   postgres:
     image: postgres:13

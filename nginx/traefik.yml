@@ -4,7 +4,9 @@
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
-    defaultRule: "Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
+    exposedByDefault: false
+    network: traefik
+    defaultRule: 'Host(`{{ index .Labels "com.docker.compose.project" }}.local`)'
 
 entryPoints:
   http:

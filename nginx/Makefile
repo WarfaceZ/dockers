@@ -1,13 +1,15 @@
-.PHONY: create-traefik start start-with-traefik start-no-traefik
+.PHONY: init start stop logs register-domain
 
-create-traefik:
-	docker run -d -p 80:80 -p 8080:8080 \
-          -v /var/run/docker.sock:/var/run/docker.sock \
-          -v $(shell pwd)/traefik.yml:/traefik.yml \
-          --network traefik \
-          --name traefik \
-          traefik:v2.11
-start: start-with-traefik
+init:
+	cp $(shell pwd)/.env.template $(shell pwd)/.env 1> /dev/null
+	cp $(shell pwd)/docker-compose.template.yml $(shell pwd)/docker-compose.yml 1> /dev/null
 
-start-with-traefik:
-	docker start traefik
+start:
+	(docker compose up -d)
+stop:
+	(docker compose stop)
+logs:
+	(docker compose logs --follow)
+
+register-domain:
+	$(shell pwd)/bin/create-domain.sh
