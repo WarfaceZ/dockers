@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker run --rm -p 9000:9000 --interactive --tty --volume $PWD:/app -w /app --user $(id -u):$(id -g) php8.1-fpm-edookit:latest $@
