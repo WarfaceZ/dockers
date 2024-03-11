@@ -20,14 +20,14 @@ services:
       - ./conf/sites/:/etc/nginx/sites-available
       - ./conf/conf.d:/etc/nginx/conf.d
     depends_on:
-      - php-fpm
+      - php81-fpm
     labels:
           - "traefik.enable=true"
           - "traefik.http.routers.nginx.rule=HostRegexp(`{domain:[a-z]+}.local`, `{subdomain:[a-z]+}.{domain:[a-z]+}.local`)"
     networks:
       - traefik
 
-  php-fpm:
+  php81-fpm:
     build:
       dockerfile: php/8.1/Dockerfile.fpm
       args:
