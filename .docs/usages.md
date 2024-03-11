@@ -1,41 +1,4 @@
-# Introduction
-
-# Commands
-
-## Initialization
-```shell
-make nginx-init 
-```
-Prepare `.env` and `docker-compose.yml`
-
-## Start
-
-```shell
-make nginx-start 
-```
-
-## Stop
-
-```shell
-make nginx-stop 
-```
-
-## Show logs
-
-```shell
-make nginx-logs 
-```
-
-## Register domain
-
-```shell
-make register-domain
-```
-
-Will register domain from template (by default (leave empty) `nginx/sites/templates/template.conf`) and add new line to `/etc/hosts`
-
-
-## How to use
+# How to use
 
 First time I will start init
 ```shell
