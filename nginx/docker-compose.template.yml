@@ -45,9 +45,7 @@ services:
 
   postgres:
     image: postgres:13
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
+    env_file: .env
     volumes:
       - ./pgsql/13/data/:/var/lib/postgresql/data
 #      - ./../pgsql/13/data/:/var/lib/postgresql/data
