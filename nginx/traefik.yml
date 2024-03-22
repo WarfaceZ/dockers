@@ -8,6 +8,7 @@ providers:
     network: traefik
     defaultRule: 'Host(`{{ index .Labels "com.docker.compose.project" }}.local`)'
 
+
 entryPoints:
   http:
     address: ":80"
@@ -15,4 +16,3 @@ entryPoints:
 api:
   dashboard: true
   insecure: true
-

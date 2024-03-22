@@ -24,6 +24,7 @@ services:
     labels:
           - "traefik.enable=true"
           - "traefik.http.routers.nginx.rule=HostRegexp(`{domain:[a-z]+}.local`, `{subdomain:[a-z]+}.{domain:[a-z]+}.local`)"
+          - "traefik.http.middlewares.allow-headers.headers.customRequestHeaders.allowedHeaders=*"
     networks:
       - traefik
 
