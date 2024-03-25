@@ -24,6 +24,7 @@ services:
     labels:
           - "traefik.enable=true"
           - "traefik.http.routers.nginx.rule=HostRegexp(`{domain:[a-z]+}.local`, `{subdomain:[a-z]+}.{domain:[a-z]+}.local`)"
+          - "traefik.http.middlewares.allow-headers.headers.customRequestHeaders.allowedHeaders=*"
     networks:
       - traefik
 
@@ -45,9 +46,7 @@ services:
 
   postgres:
     image: postgres:13
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
+    env_file: .env
     volumes:
       - ./pgsql/13/data/:/var/lib/postgresql/data
 #      - ./../pgsql/13/data/:/var/lib/postgresql/data

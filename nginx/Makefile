@@ -1,6 +1,10 @@
 .PHONY: init start stop restart logs register-domain
 
+network-init:
+	docker network create traefik
+
 init:
+	docker network create traefik
 	cp $(shell pwd)/.env.template $(shell pwd)/.env 1> /dev/null
 	cp $(shell pwd)/docker-compose.template.yml $(shell pwd)/docker-compose.yml 1> /dev/null
 
